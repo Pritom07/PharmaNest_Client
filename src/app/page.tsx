@@ -1,10 +1,7 @@
-import { Button } from "@/components/ui/button";
-
 export default function Home() {
   return (
-    <div>
+    <div className="bg-[#E0F2f1] min-h-screen">
       <h1>Welcome</h1>
-      <Button>click</Button>
     </div>
   );
 }
