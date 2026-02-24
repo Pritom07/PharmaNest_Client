@@ -57,7 +57,6 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Mobile Button */}
           <button
             className="md:hidden bg-white"
             onClick={() => setIsOpen(!isOpen)}
