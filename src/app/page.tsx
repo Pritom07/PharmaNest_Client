@@ -1,6 +1,7 @@
 import Features from "@/components/modules/Features";
 import Support from "@/components/modules/Support";
 import TopRatedMedicines from "@/components/modules/TopRatedMedicines";
+import { Home_Accordion } from "@/components/modules/Accordion";
 import Image from "next/image";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       </div>
       <Features />
       <TopRatedMedicines />
+      <Home_Accordion />
       <Support />
     </div>
   );

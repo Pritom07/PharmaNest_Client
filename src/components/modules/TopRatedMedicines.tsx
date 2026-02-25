@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 const TopRatedMedicines = () => {
   return (
     <div className="max-w-7xl mx-auto mt-6">
-      <h1 className="font-bold text-2xl pl-2.5">Top Rated Medicines</h1>
+      <h1 className="font-bold text-2xl">Top Rated Medicines :</h1>
       <div className="grid griid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-5">
         <Card className="bg-white">
           <CardHeader>

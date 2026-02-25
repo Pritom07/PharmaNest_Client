@@ -4,7 +4,7 @@ import { ImHeadphones } from "react-icons/im";
 
 const Support = () => {
   return (
-    <div className="max-w-7xl mx-auto mt-7 border-t-4 border-t-[#008080] pb-6">
+    <div className="max-w-7xl mx-auto mt-8 border-t-4 border-t-[#008080] pb-6">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-5 mt-5">
         <div className="flex items-center gap-3">
           <RiSecurePaymentLine className="text-3xl text-[#008080]" />
