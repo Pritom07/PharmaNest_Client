@@ -17,18 +17,24 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from "react-toastify";
 import * as z from "zod";
 
 const formSchema = z.object({
   name: z.string().min(1),
-  email: z.email(),
+  email: z.email("Invalid email address"),
   password: z.string().min(8),
-  role: z.string(),
+  role: z.enum(["CUSTOMER", "SELLER"], {
+    message: "Role must be CUSTOMER or SELLER",
+  }),
 });
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       name: "",
@@ -40,7 +46,19 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      try {
+        const { data, error } = await authClient.signUp.email(value);
+        if (data && error === null) {
+          toast.success("User created successfully !");
+          return router.push("/login");
+        }
+        toast.error("SOMETHING_WENT_WRONG");
+        console.log(error);
+        return;
+      } catch (err: any) {
+        toast.error(err.message);
+        return;
+      }
     },
   });
 
@@ -82,6 +100,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
                       placeholder="Enter your name"
+                      className="border-2 border-slate-300"
                     />
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />
@@ -107,6 +126,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
                       placeholder="m@gmail.com"
+                      className="border-2 border-slate-300"
                     />
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />
@@ -132,6 +152,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                       onChange={(e) => field.handleChange(e.target.value)}
                       aria-invalid={isInvalid}
                       placeholder="Enter your password"
+                      className="border-2 border-slate-300"
                     />
                     <FieldDescription>
                       Must be at least 8 characters long.
@@ -151,20 +172,20 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      Mention Your Role
-                    </FieldLabel>
-                    <Input
-                      type="password"
+                    <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+                    <select
                       id={field.name}
                       name={field.name}
-                      value={field.state.value}
+                      value={field.state.value || ""}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      aria-invalid={isInvalid}
-                      placeholder="e.g: CUSTOMER or SELLER"
-                      required
-                    />
-                    <FieldDescription>Must be Capital Letter</FieldDescription>
+                      className="border-2 border-slate-300 rounded-lg p-1"
+                    >
+                      <option value="" disabled>
+                        SELECT YOUR ROLE
+                      </option>
+                      <option value="CUSTOMER">CUSTOMER</option>
+                      <option value="SELLER">SELLER</option>
+                    </select>
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />
                     )}

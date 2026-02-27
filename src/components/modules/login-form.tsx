@@ -22,9 +22,11 @@ import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { toast } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  email: z.email(),
+  email: z.email("Invalid email address"),
   password: z.string().min(8),
 });
 
@@ -32,6 +34,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -41,8 +44,19 @@ export function LoginForm({
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      toast.success("Wow so easy!");
-      console.log(value);
+      try {
+        const { data, error } = await authClient.signIn.email(value);
+        console.log(data, error);
+        if (data && error === null) {
+          toast.success("Login successfull !");
+          return router.push("/");
+        }
+        toast.error("SOMETHING_WENT_WRONG");
+        return;
+      } catch (err: any) {
+        toast.error(err.message);
+        return;
+      }
     },
   });
 
@@ -83,6 +97,7 @@ export function LoginForm({
                         onChange={(e) => field.handleChange(e.target.value)}
                         aria-invalid={isInvalid}
                         placeholder="m@gmail.com"
+                        className="border-2 border-slate-300"
                       />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
@@ -108,6 +123,7 @@ export function LoginForm({
                         onChange={(e) => field.handleChange(e.target.value)}
                         aria-invalid={isInvalid}
                         placeholder="Enter your password"
+                        className="border-2 border-slate-300"
                       />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
