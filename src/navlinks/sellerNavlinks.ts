@@ -4,6 +4,6 @@ import { CgProfile } from "react-icons/cg";
 export const sellerNavLinks: T_navlinks[] = [
   { name: "Home", href: "/" },
   { name: "Shop", href: "/shop" },
-  { name: "Manage Medicines", href: "/manage_medicines" },
+  { name: "Dashboard", href: "/seller/dashboard" },
   { name: "Profile", href: "/profile", icon: CgProfile },
 ];

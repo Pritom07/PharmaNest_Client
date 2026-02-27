@@ -132,16 +132,25 @@ const Navbar = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`pb-1 font-medium border-b-2 w-fit ${
-                  isActive
-                    ? "text-black border-black"
-                    : "text-gray-600 border-transparent"
-                }`}
+                className={`relative pb-1 font-medium transition ${isActive ? `text-black` : `text-gray-500`}`}
               >
                 {link.name}
               </Link>
             );
           })}
+
+          {userRole === role.CUSTOMER && <FaCartPlus className="text-xl" />}
+
+          {session ? (
+            <Button
+              onClick={logOut}
+              className="bg-[#008080] text-white font-semibold text-[16px] lg:-mt-1 lg:-ml-3.5 cursor-pointer hover:bg-[#008080]"
+            >
+              Logout
+            </Button>
+          ) : (
+            <FaCartPlus className="text-xl" />
+          )}
         </div>
       </div>
     </nav>

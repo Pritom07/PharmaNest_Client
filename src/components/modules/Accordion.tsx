@@ -11,7 +11,7 @@ export function Home_Accordion() {
       type="single"
       collapsible
       defaultValue="shipping"
-      className="max-w-7xl mx-auto mt-7"
+      className="max-w-7xl mx-auto mt-7 px-3.5"
     >
       <h1 className="text-2xl font-bold">Frequently Asked Questions :</h1>
       <AccordionItem
