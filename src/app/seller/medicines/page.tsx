@@ -1,9 +1,7 @@
+import { redirect } from "next/navigation";
+
 const ManageMedicines = () => {
-  return (
-    <div>
-      <h1>manage medicines</h1>
-    </div>
-  );
+  return redirect("/seller/medicines/add_medicine");
 };
 
 export default ManageMedicines;

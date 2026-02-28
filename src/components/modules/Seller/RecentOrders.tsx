@@ -9,15 +9,15 @@ import {
 
 const RecentOrders = () => {
   return (
-    <div className="mt-14">
+    <div className="mt-14 pb-5">
       <h1 className="text-2xl font-bold">Recent orders</h1>
       <Table className="mt-4 border-2 border-slate-300">
         <TableHeader>
           <TableRow className="border-b-2 border-slate-300">
-            <TableHead className="text-lg">Order ID</TableHead>
-            <TableHead className="text-lg">Date</TableHead>
-            <TableHead className="text-lg">Total</TableHead>
-            <TableHead className="text-lg">Status</TableHead>
+            <TableHead className="text-[17px]">Order ID</TableHead>
+            <TableHead className="text-[17px]">Date</TableHead>
+            <TableHead className="text-[17px]">Total</TableHead>
+            <TableHead className="text-[17px]">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
