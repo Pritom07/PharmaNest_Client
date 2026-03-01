@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { env } from "./env";
 
 const nextConfig: NextConfig = {
   images: {
@@ -9,6 +10,14 @@ const nextConfig: NextConfig = {
         hostname: "i.ibb.co.com",
       },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/auth/:path*",
+        destination: `${env.API_URL}/:path*`,
+      },
+    ];
   },
 };
 

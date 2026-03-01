@@ -16,8 +16,8 @@ const data = [
     url: "/seller/medicines/add_medicine",
   },
   {
-    title: "All Medicines",
-    url: "/seller/medicines/all_medicines",
+    title: "View Medicines",
+    url: "/seller/medicines/view_medicines",
   },
 ];
 

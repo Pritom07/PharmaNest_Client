@@ -46,7 +46,6 @@ export function LoginForm({
     onSubmit: async ({ value }) => {
       try {
         const { data, error } = await authClient.signIn.email(value);
-        console.log(data, error);
         if (data && error === null) {
           toast.success("Login successfull !");
           return router.push("/");

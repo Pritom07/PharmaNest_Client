@@ -53,7 +53,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           return router.push("/login");
         }
         toast.error("SOMETHING_WENT_WRONG");
-        console.log(error);
         return;
       } catch (err: any) {
         toast.error(err.message);
