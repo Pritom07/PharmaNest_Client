@@ -2,11 +2,10 @@
 
 import { medicineServices } from "@/services/medicine.services";
 import { T_medicineData } from "@/types/medicineDataTypes";
+import { revalidateTag } from "next/cache";
 
 export const addMedicine = async (medicineData: T_medicineData) => {
-  return await medicineServices.addMedicine(medicineData);
-};
-
-export const getAllMedicines = async () => {
-  return await medicineServices.viewAllMedicines();
+  const res = await medicineServices.addMedicine(medicineData);
+  revalidateTag("Medicines", "max");
+  return res;
 };

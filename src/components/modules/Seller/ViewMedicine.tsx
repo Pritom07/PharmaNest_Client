@@ -1,6 +1,5 @@
 "use client";
 
-import { getAllMedicines } from "@/actions/medicine.action";
 import EditDialog from "@/components/layout/Dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,29 +11,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { T_medicineData } from "@/types/medicineDataTypes";
-import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 
-const ViewMedicine = () => {
-  const [medicineData, setMedicineData] = useState<{
-    data?: T_medicineData[];
-    metadata?: any;
-    success?: boolean;
-  }>({});
+const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
+  const handleDeletemedicine = () => {
+    console.log("delete medicine");
+  };
 
-  useEffect(() => {
-    (async () => {
-      const { data } = await getAllMedicines();
-      if (data.success === true) {
-        setMedicineData(data);
-      }
-    })();
-  }, []);
-
-  const medicines = medicineData?.data;
-  const metaData = medicineData?.metadata;
   return (
-    <div className="max-w-7xl mx-auto py-3 px-3.5">
+    <div className="max-w-7xl mx-auto py-1 px-3.5">
       <Table>
         <TableHeader>
           <TableRow>
@@ -54,7 +39,7 @@ const ViewMedicine = () => {
               <TableCell>
                 <img src={medicine.img_url} className="w-12" />
               </TableCell>
-              <TableCell className="font-bold text-[15px]">
+              <TableCell className="font-semibold lg:font-bold text-[15px]">
                 {medicine.name}
               </TableCell>
               <TableCell>
@@ -62,14 +47,17 @@ const ViewMedicine = () => {
                   {medicine.medicine_Category?.name}
                 </Button>
               </TableCell>
-              <TableCell className="font-bold text-[15px]">
+              <TableCell className="font-semibold lg:font-bold text-[15px]">
                 {medicine.price}
               </TableCell>
-              <TableCell className="font-bold text-[15px]">
+              <TableCell className="font-semibold lg:font-bold text-[15px]">
                 {medicine.stock}
               </TableCell>
               <TableCell>
-                <Button className="bg-red-600 text-white text-xl hover:bg-red-600 hover:text-white cursor-pointer">
+                <Button
+                  onClick={handleDeletemedicine}
+                  className="bg-red-600 text-white text-xl hover:bg-red-600 hover:text-white cursor-pointer"
+                >
                   <AiFillDelete />
                 </Button>
               </TableCell>
