@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteMedicine } from "@/actions/medicine.action";
 import EditDialog from "@/components/layout/Dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +13,30 @@ import {
 } from "@/components/ui/table";
 import { T_medicineData } from "@/types/medicineDataTypes";
 import { AiFillDelete } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
-  const handleDeletemedicine = () => {
-    console.log("delete medicine");
+  const handleDeletemedicine = (name: string, id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You won't be able to revert ${name} !`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#008080",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data } = await deleteMedicine(id);
+        if (data.success === true) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        }
+      }
+    });
   };
 
   return (
@@ -55,7 +76,9 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
               </TableCell>
               <TableCell>
                 <Button
-                  onClick={handleDeletemedicine}
+                  onClick={() =>
+                    handleDeletemedicine(medicine.name, medicine.id as string)
+                  }
                   className="bg-red-600 text-white text-xl hover:bg-red-600 hover:text-white cursor-pointer"
                 >
                   <AiFillDelete />

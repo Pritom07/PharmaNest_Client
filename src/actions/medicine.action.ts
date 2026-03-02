@@ -9,3 +9,9 @@ export const addMedicine = async (medicineData: T_medicineData) => {
   revalidateTag("Medicines", "max");
   return res;
 };
+
+export const deleteMedicine = async (id: string) => {
+  const res = await medicineServices.deleteMedicine(id);
+  revalidateTag("Medicines", "max");
+  return res;
+};

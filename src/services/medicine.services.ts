@@ -70,4 +70,24 @@ export const medicineServices = {
       return { data: null, error: { message: err.message } };
     }
   },
+
+  deleteMedicine: async function (id: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/seller/medicines/${id}`, {
+        method: "DELETE",
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+      });
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
 };
