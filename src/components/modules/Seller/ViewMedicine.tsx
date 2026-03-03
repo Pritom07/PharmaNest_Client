@@ -31,8 +31,9 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
         if (data.success === true) {
           Swal.fire({
             title: "Deleted!",
-            text: "Your file has been deleted.",
+            text: `${name} has been deleted.`,
             icon: "success",
+            confirmButtonColor: "#008080",
           });
         }
       }
@@ -40,7 +41,7 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-1 px-3.5">
+    <div className="max-w-7xl mx-auto px-3.5">
       <Table>
         <TableHeader>
           <TableRow>
@@ -85,7 +86,7 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
                 </Button>
               </TableCell>
               <TableCell>
-                <EditDialog />
+                <EditDialog medicine_id={medicine.id as string} />
               </TableCell>
             </TableRow>
           ))}

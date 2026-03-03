@@ -280,7 +280,7 @@ const AddMedicine = () => {
                           onChange={(e) => {
                             const value = e.target.value;
                             field.handleChange(
-                              value === "" ? 0 : Number(value),
+                              value === "" ? 5 : Number(value),
                             );
                           }}
                           className="border-2 border-slate-300 font-semibold"

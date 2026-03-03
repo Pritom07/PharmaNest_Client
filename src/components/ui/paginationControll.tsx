@@ -10,7 +10,7 @@ import {
 import { Button } from "./button";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const PaginationContrill = ({
+const PaginationControll = ({
   metaData,
 }: {
   metaData: T_paginationMedicineMetaData;
@@ -29,7 +29,7 @@ const PaginationContrill = ({
   let end = Math.min(currentPage * size, totalMedicines);
 
   return (
-    <div className="max-w-7xl mx-auto mt-8 lg:mt-2 px-3.5 flex flex-col lg:flex-row justify-between items-center gap-2.5">
+    <div className="max-w-7xl mx-auto mt-8 lg:mt-3 px-3.5 flex flex-col lg:flex-row justify-between items-center gap-2.5 pb-3">
       <div className=" text-gray-600 font-semibold">
         Result : {start} to {end} of {totalMedicines}
       </div>
@@ -75,4 +75,4 @@ const PaginationContrill = ({
   );
 };
 
-export default PaginationContrill;
+export default PaginationControll;

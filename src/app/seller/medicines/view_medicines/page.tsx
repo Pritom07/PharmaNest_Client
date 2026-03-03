@@ -1,5 +1,5 @@
 import ViewMedicine from "@/components/modules/Seller/ViewMedicine";
-import PaginationContrill from "@/components/ui/paginationContrill";
+import PaginationControll from "@/components/ui/paginationControll";
 import { medicineServices } from "@/services/medicine.services";
 
 const All_Medicines = async ({
@@ -18,7 +18,7 @@ const All_Medicines = async ({
   return (
     <div>
       <ViewMedicine medicines={medicines} />
-      <PaginationContrill metaData={metaData} />
+      <PaginationControll metaData={metaData} />
     </div>
   );
 };

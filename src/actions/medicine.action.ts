@@ -15,3 +15,13 @@ export const deleteMedicine = async (id: string) => {
   revalidateTag("Medicines", "max");
   return res;
 };
+
+export const getmedicineById = async (id: string) => {
+  return await medicineServices.getmedicineById(id);
+};
+
+export const updateMedicine = async (id: string, payLoad: T_medicineData) => {
+  const res = await medicineServices.updateMedicine(id, payLoad);
+  revalidateTag("Medicines", "max");
+  return res;
+};
