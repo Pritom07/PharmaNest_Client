@@ -69,7 +69,7 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
       );
 
       if (data.success === true) {
-        toast.success("Medicine Data is updated !");
+        return toast.success("Medicine Data is updated !");
       }
     },
   });
