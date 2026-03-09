@@ -34,6 +34,7 @@ const formSchema = z.object({
   stock: z.number().min(5),
   category_id: z.number().min(1, "Category is not selected"),
   img_url: z.string().min(1),
+  description: z.string().min(1),
 });
 
 const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
@@ -58,6 +59,7 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
       stock: medicinedata?.stock ?? 5,
       category_id: 0,
       img_url: medicinedata?.img_url ?? "",
+      description: medicinedata?.description ?? "",
     },
     validators: {
       onSubmit: formSchema,
@@ -83,6 +85,7 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
         stock: medicinedata.stock,
         category_id: medicinedata.category_id,
         img_url: medicinedata.img_url,
+        description: medicinedata.description ?? "",
       });
     }
   }, [medicinedata]);
@@ -313,6 +316,29 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
                   }}
                 />
               </div>
+
+              <form.Field
+                name="description"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Description</FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="border-2 border-slate-300"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
+                }}
+              />
             </FieldGroup>
 
             <DialogFooter>

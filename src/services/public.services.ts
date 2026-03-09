@@ -72,4 +72,17 @@ export const publicServices = {
       return { data: null, error: { message: err.message } };
     }
   },
+
+  getTopRatedMedicine: async function () {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/medicines/topRated`);
+      const data = await res.json();
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
 };

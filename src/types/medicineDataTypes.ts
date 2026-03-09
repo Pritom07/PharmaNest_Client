@@ -7,9 +7,11 @@ export type T_medicineData = {
   user_id: string | undefined;
   img_url: string;
   id?: string;
+  description?: string | undefined;
   medicine_Category?: {
     name: string;
   };
   createdAt?: string;
   updatedAt?: string | null;
+  quantity?: number;
 };

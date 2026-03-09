@@ -3,8 +3,11 @@ import Support from "@/components/modules/Support";
 import TopRatedMedicines from "@/components/modules/TopRatedMedicines";
 import { Home_Accordion } from "@/components/modules/Accordion";
 import Image from "next/image";
+import { publicServices } from "@/services/public.services";
 
-export default function Home() {
+export default async function Home() {
+  const { data } = await publicServices.getTopRatedMedicine();
+  const topMedicines = data?.data;
   return (
     <div>
       <div className="relative w-full h-96">
@@ -17,7 +20,7 @@ export default function Home() {
         />
       </div>
       <Features />
-      <TopRatedMedicines />
+      <TopRatedMedicines topMedicines={topMedicines} />
       <Home_Accordion />
       <Support />
     </div>

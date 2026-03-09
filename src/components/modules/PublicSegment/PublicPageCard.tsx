@@ -10,17 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const PublicPageCard = ({ medicine }: { medicine: T_medicineData }) => {
-  const {
-    id,
-    name,
-    price,
-    stock,
-    user_id,
-    createdAt,
-    updatedAt,
-    img_url,
-    manufacturer,
-  } = medicine;
+  const { id, name, price, stock, img_url, manufacturer } = medicine;
   return (
     <Card>
       <CardHeader>
@@ -43,7 +33,20 @@ const PublicPageCard = ({ medicine }: { medicine: T_medicineData }) => {
           TK. {price}
         </h1>
       </CardContent>
-      <CardFooter className="flex justify-end items-center">
+      <CardFooter className="flex justify-between items-center mt-1">
+        {stock < 10 ? (
+          stock === 0 ? (
+            <Button className="bg-red-600 hover:bg-red-600">
+              Out of Stock
+            </Button>
+          ) : (
+            <Button className="bg-amber-600 hover:bg-amber-600">
+              Low Stock
+            </Button>
+          )
+        ) : (
+          <Button className="bg-green-600 hover:bg-green-600">In Stock</Button>
+        )}
         <Link href={`/shop/medicine/${id}`}>
           <Button className="bg-[#008080] hover:bg-[#008080] cursor-pointer">
             View Details

@@ -16,6 +16,7 @@ import { publicNavlinks } from "@/navlinks/publicNavlinks";
 import { Button } from "../ui/button";
 import { FaCartPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { getLocalStorageItem } from "@/LocalstorageManagement/Localstorage";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +47,22 @@ const Navbar = () => {
       routes = publicNavlinks;
       break;
   }
+
+  const [cartItemCount, setCartItemCount] = useState(0);
+
+  useEffect(() => {
+    const cartUpdation = () => {
+      const medicines = getLocalStorageItem();
+      setCartItemCount(medicines.length);
+    };
+
+    cartUpdation();
+
+    window.addEventListener("cartUpdated", cartUpdation);
+    return () => {
+      window.removeEventListener("cartUpdated", cartUpdation);
+    };
+  }, []);
 
   const logOut = async () => {
     await authClient.signOut();
@@ -93,7 +110,14 @@ const Navbar = () => {
             })}
 
             {userRole === role.CUSTOMER && (
-              <FaCartPlus className="text-white text-xl" />
+              <div className="relative">
+                <FaCartPlus className="text-white text-xl" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    {cartItemCount}
+                  </span>
+                )}
+              </div>
             )}
 
             {session ? (

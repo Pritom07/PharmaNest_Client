@@ -184,7 +184,7 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
         </div>
       )}
 
-      <div className="mt-16">
+      <div className="mt-12">
         <h1 className="text-center font-bold text-3xl mb-7">All Medicines</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
