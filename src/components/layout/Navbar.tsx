@@ -111,7 +111,7 @@ const Navbar = () => {
 
             {userRole === role.CUSTOMER && (
               <div className="relative">
-                <FaCartPlus className="text-white text-xl" />
+                <FaCartPlus className="text-white text-xl cursor-pointer" />
                 {cartItemCount > 0 && (
                   <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
                     {cartItemCount}
@@ -128,7 +128,14 @@ const Navbar = () => {
                 Logout
               </Button>
             ) : (
-              <FaCartPlus className="text-white text-xl" />
+              <div className="relative">
+                <FaCartPlus className="text-white text-xl cursor-pointer" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    {cartItemCount}
+                  </span>
+                )}
+              </div>
             )}
           </div>
 

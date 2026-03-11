@@ -50,7 +50,7 @@ export function LoginForm({
           toast.success("Login successfull !");
           return router.push("/");
         }
-        toast.error("SOMETHING_WENT_WRONG");
+        toast.error(error.message);
         return;
       } catch (err: any) {
         toast.error(err.message);

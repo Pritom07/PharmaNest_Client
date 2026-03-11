@@ -18,7 +18,17 @@ export type T_user =
       image: string | null;
       name: string;
       role: USER_ROLE;
+      address?: string;
+      phoneNumber?: string;
       status: userStatus;
       updatedAt: string;
     }
   | undefined;
+
+export type T_updateUser = {
+  name?: string;
+  email?: string;
+  image?: string;
+  address?: string;
+  phoneNumber?: string;
+};

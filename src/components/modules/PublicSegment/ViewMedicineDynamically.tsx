@@ -73,7 +73,7 @@ const ViewMedicineDynamically = ({
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row justify-center items-center gap-12">
+      <div className="flex flex-col lg:flex-row justify-center items-center gap-10 lg:gap-12">
         <div className="relative w-full lg:w-104 h-80 px-3">
           <Image
             src={img_url}
@@ -119,14 +119,14 @@ const ViewMedicineDynamically = ({
               onClick={handleIncrement}
               className="bg-[#008080] hover:bg-[#008080] cursor-pointer font-semibold"
             >
-              Increase
+              Increase (+)
             </Button>
             <h1 className="text-2xl font-bold">{quantity}</h1>
             <Button
               onClick={handleDecrement}
               className="bg-[#008080] hover:bg-[#008080] cursor-pointer font-semibold"
             >
-              Decrease
+              Decrease (-)
             </Button>
           </div>
           <Button
