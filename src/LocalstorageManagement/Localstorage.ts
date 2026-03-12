@@ -28,7 +28,7 @@ const addLocalStorageItem = (medicineObj: T_medicineData) => {
     medicines.push(medicineObj);
     setLocalStorageItem(medicines);
   }
-  window.dispatchEvent(new Event("cartUpdated"));
+  window.dispatchEvent(new Event("cartUpdated")); //for Navbar.tsx cart count updation
 };
 
 const removeLocalStorageItem = (id: string) => {
@@ -37,6 +37,7 @@ const removeLocalStorageItem = (id: string) => {
     (medicine: T_medicineData) => medicine.id !== id,
   );
   setLocalStorageItem(medicineArray);
+  window.dispatchEvent(new Event("cartUpdated")); //for CartItemDisplay.tsx cart display updation
 };
 
 export { getLocalStorageItem, addLocalStorageItem, removeLocalStorageItem };

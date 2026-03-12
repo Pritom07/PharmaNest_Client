@@ -110,14 +110,16 @@ const Navbar = () => {
             })}
 
             {userRole === role.CUSTOMER && (
-              <div className="relative">
-                <FaCartPlus className="text-white text-xl cursor-pointer" />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                    {cartItemCount}
-                  </span>
-                )}
-              </div>
+              <Link href="/customer/cart">
+                <div className="relative">
+                  <FaCartPlus className="text-white text-xl cursor-pointer" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </div>
+              </Link>
             )}
 
             {session ? (
@@ -128,14 +130,16 @@ const Navbar = () => {
                 Logout
               </Button>
             ) : (
-              <div className="relative">
-                <FaCartPlus className="text-white text-xl cursor-pointer" />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                    {cartItemCount}
-                  </span>
-                )}
-              </div>
+              <Link href="/customer/cart">
+                <div className="relative">
+                  <FaCartPlus className="text-white text-xl cursor-pointer" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-2.5 -right-3 bg-red-500 text-white font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </div>
+              </Link>
             )}
           </div>
 
