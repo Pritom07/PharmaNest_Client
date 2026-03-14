@@ -25,13 +25,7 @@ import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const EditProfileSection = ({
-  currentUser,
-  setUser,
-}: {
-  currentUser: T_user;
-  setUser: React.Dispatch<React.SetStateAction<T_user>>;
-}) => {
+const EditProfileSection = ({ currentUser }: { currentUser: T_user }) => {
   const [open, setOpen] = useState(false);
 
   const form = useForm({
@@ -72,7 +66,7 @@ const EditProfileSection = ({
         updatePassword.currentPassword = value.currentPassword;
         updatePassword.newPassword = value.newPassword;
       } else if (value.currentPassword || value.newPassword) {
-        toast.error("Both current and new password required");
+        toast.error("Both Current and New password required");
         return;
       }
 
@@ -86,10 +80,7 @@ const EditProfileSection = ({
           }
 
           toast.success("Profile updated successfully");
-          setUser((prev: any) => ({
-            ...prev,
-            ...updateProfileInfo,
-          }));
+          window.dispatchEvent(new Event("userUpdated"));
           setOpen(false);
         }
 
@@ -102,10 +93,6 @@ const EditProfileSection = ({
           }
 
           toast.success("Password updated successfully");
-          setUser((prev: any) => ({
-            ...prev,
-            ...updateProfileInfo,
-          }));
           setOpen(false);
         }
 

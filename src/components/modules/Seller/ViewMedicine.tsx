@@ -66,7 +66,7 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
               </TableCell>
               <TableCell>
                 <Button className="bg-amber-600 hover:bg-amber-600 hover:text-white rounded-lg">
-                  {medicine.medicine_Category?.name}
+                  {medicine.category?.name}
                 </Button>
               </TableCell>
               <TableCell className="font-semibold lg:font-bold text-[15px]">

@@ -20,6 +20,32 @@ export const userServices = {
     }
   },
 
+  getUserById: async function (id: string) {
+    try {
+      const BACKEND_URL = env.BACKEND_URL;
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/user/${id}`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        return { data: null, error: { message: "Failed to fetch user" } };
+      }
+
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+      return { data: null, error: { message: "SOMETHING_WENT_WRONF" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
   updateProfileInfo: async function (payLoad: T_updateUser) {
     try {
       const BACKEND_URL = env.BACKEND_URL;

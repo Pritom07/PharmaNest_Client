@@ -22,10 +22,10 @@ const ViewMedicineDynamically = ({
     stock,
     manufacturer,
     img_url,
-    medicine_Category,
+    category,
     description,
     category_id,
-    user_id,
+    seller_id,
   } = medicineData;
 
   const [quantity, setQuantity] = useState(1);
@@ -64,7 +64,7 @@ const ViewMedicineDynamically = ({
       price,
       stock,
       manufacturer,
-      user_id,
+      seller_id,
       img_url,
       category_id,
       quantity,
@@ -92,7 +92,7 @@ const ViewMedicineDynamically = ({
             TK. {price}
           </h1>
           <Button className="mt-2.5 bg-[#008080] rounded-full text-white font-semibold hover:bg-[#008080]">
-            {medicine_Category?.name}
+            {category?.name}
           </Button>
           <div className="flex items-center gap-10 mt-3">
             <h1 className="font-bold text-[18px]">Stock : {stock}</h1>
@@ -118,6 +118,11 @@ const ViewMedicineDynamically = ({
             <Button
               onClick={handleIncrement}
               className="bg-[#008080] hover:bg-[#008080] cursor-pointer font-semibold"
+              disabled={
+                userRole === role.ADMIN ||
+                userRole === role.SELLER ||
+                stock === 0
+              }
             >
               Increase (+)
             </Button>
@@ -125,13 +130,20 @@ const ViewMedicineDynamically = ({
             <Button
               onClick={handleDecrement}
               className="bg-[#008080] hover:bg-[#008080] cursor-pointer font-semibold"
+              disabled={
+                userRole === role.ADMIN ||
+                userRole === role.SELLER ||
+                stock === 0
+              }
             >
               Decrease (-)
             </Button>
           </div>
           <Button
             className="bg-[#008080] hover:bg-[#008080] cursor-pointer mt-5 font-semibold"
-            disabled={userRole === role.ADMIN || userRole === role.SELLER}
+            disabled={
+              userRole === role.ADMIN || userRole === role.SELLER || stock === 0
+            }
             onClick={handleCartItem}
           >
             Add to Cart

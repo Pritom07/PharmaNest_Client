@@ -2,10 +2,13 @@
 
 import { userServices } from "@/services/user.service";
 import { T_updateUser } from "@/types/userType";
-import { revalidatePath } from "next/cache";
 
 export const getSession = async () => {
   return await userServices.getSession();
+};
+
+export const getCurrentUserById = async (id: string) => {
+  return await userServices.getUserById(id);
 };
 
 export const updateUserProfileInfo = async (payLoad: T_updateUser) => {

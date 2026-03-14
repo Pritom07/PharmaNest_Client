@@ -26,7 +26,7 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
   const DEFAULT_SORT_BY = "createdAt";
   const DEFAULT_SORT_ORDER = "desc";
 
-  const [medicine, setMedicine] = useState<T_medicineData[]>([]);
+  const [medicine, setMedicine] = useState<T_medicineData[] | []>([]);
   const [loading, setLoading] = useState(false);
 
   const priceFilters: T_priceFilter[] = [
@@ -35,18 +35,18 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
   ];
 
   const frameworks: T_framework[] = [
-    { label: "Tablet", value: 1 },
-    { label: "Capsule", value: 2 },
+    { label: "General Medicine", value: 1 },
+    { label: "Antibiotics", value: 2 },
     { label: "Syrup", value: 3 },
-    { label: "Injection", value: 4 },
-    { label: "Antibiotic", value: 5 },
+    { label: "Insulin", value: 4 },
+    { label: "Infection Treatment", value: 5 },
     { label: "Pain Relief", value: 6 },
-    { label: "Antiseptic", value: 7 },
-    { label: "Vitamin & Supplement", value: 8 },
-    { label: "Diabetes Care", value: 9 },
-    { label: "Cardiac Care", value: 10 },
-    { label: "Skin Care", value: 11 },
-    { label: "Eye & Ear Drops", value: 12 },
+    { label: "Antiseptic & Disinfectant", value: 7 },
+    { label: "Vitamin & Supplements", value: 8 },
+    { label: "Diabetes Medicine", value: 9 },
+    { label: "Blood Pressure Medicine", value: 10 },
+    { label: "Skin Care Medicine", value: 11 },
+    { label: "Veterinary Medicine", value: 12 },
   ];
 
   const handlePriceFilter = (sortingBy: string, sortingOrder: string) => {

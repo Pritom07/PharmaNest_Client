@@ -11,16 +11,16 @@ enum userStatus {
 
 export type T_user =
   | {
-      createdAt: string;
+      id: string;
+      name: string;
       email: string;
       emailVerified: boolean;
-      id: string;
       image: string | null;
-      name: string;
       role: USER_ROLE;
       address?: string;
       phoneNumber?: string;
       status: userStatus;
+      createdAt: string;
       updatedAt: string;
     }
   | undefined;

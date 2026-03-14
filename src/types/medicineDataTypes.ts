@@ -4,11 +4,11 @@ export type T_medicineData = {
   stock: number;
   manufacturer: string;
   category_id: number;
-  user_id: string | undefined;
+  seller_id: string | undefined;
   img_url: string;
   id?: string;
   description?: string | undefined;
-  medicine_Category?: {
+  category?: {
     name: string;
   };
   createdAt?: string;

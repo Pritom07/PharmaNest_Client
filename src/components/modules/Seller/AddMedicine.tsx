@@ -27,11 +27,12 @@ import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { T_framework } from "@/types/FrameworkType";
 import { useEffect, useState } from "react";
-import { getSession } from "@/actions/user.action";
+import { getCurrentUserById, getSession } from "@/actions/user.action";
 import { toast } from "react-toastify";
 import { T_medicineData } from "@/types/medicineDataTypes";
 import { addMedicine } from "@/actions/medicine.action";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -39,7 +40,7 @@ const formSchema = z.object({
   stock: z.number().min(5),
   manufacturer: z.string().min(1),
   category_id: z.number().min(1, "Category is not selected"),
-  user_id: z.string(),
+  seller_id: z.string(),
   user_name: z.string(),
   img_url: z.string().min(1),
 });
@@ -53,7 +54,7 @@ const AddMedicine = () => {
       stock: 5,
       manufacturer: "",
       category_id: 0,
-      user_id: "",
+      seller_id: "",
       user_name: "",
       img_url: "",
     },
@@ -68,7 +69,7 @@ const AddMedicine = () => {
           stock: Number(value.stock),
           manufacturer: value.manufacturer,
           category_id: Number(value.category_id),
-          user_id: userInfo?.user_id,
+          seller_id: userInfo?.seller_id,
           img_url: value.img_url,
         };
         const { data } = await addMedicine(medicineData);
@@ -86,33 +87,35 @@ const AddMedicine = () => {
   });
 
   const frameworks: T_framework[] = [
-    { label: "Tablet", value: 1 },
-    { label: "Capsule", value: 2 },
+    { label: "General Medicine", value: 1 },
+    { label: "Antibiotics", value: 2 },
     { label: "Syrup", value: 3 },
-    { label: "Injection", value: 4 },
-    { label: "Antibiotic", value: 5 },
+    { label: "Insulin", value: 4 },
+    { label: "Infection Treatment", value: 5 },
     { label: "Pain Relief", value: 6 },
-    { label: "Antiseptic", value: 7 },
-    { label: "Vitamin & Supplement", value: 8 },
-    { label: "Diabetes Care", value: 9 },
-    { label: "Cardiac Care", value: 10 },
-    { label: "Skin Care", value: 11 },
-    { label: "Eye & Ear Drops", value: 12 },
+    { label: "Antiseptic & Disinfectant", value: 7 },
+    { label: "Vitamin & Supplements", value: 8 },
+    { label: "Diabetes Medicine", value: 9 },
+    { label: "Blood Pressure Medicine", value: 10 },
+    { label: "Skin Care Medicine", value: 11 },
+    { label: "Veterinary Medicine", value: 12 },
   ];
 
+  const { data: userData } = authClient.useSession();
   const [userInfo, setUserInfo] = useState<{
     user_name?: string;
-    user_id?: string;
+    seller_id?: string;
   }>({});
 
   useEffect(() => {
     (async () => {
-      const { session, user } = await getSession();
-      const user_name = user?.name;
-      const user_id = user?.id;
-      setUserInfo({ user_name, user_id });
+      const user_id = userData?.user?.id;
+      const { data } = await getCurrentUserById(user_id as string);
+      const user_name = data?.data?.name;
+      const seller_id = data?.data?.id;
+      setUserInfo({ user_name, seller_id });
     })();
-  }, []);
+  }, [userData]);
 
   return (
     <div className="max-w-4xl mx-auto py-6 px-3.5">
@@ -133,7 +136,7 @@ const AddMedicine = () => {
             <FieldGroup>
               <div className="flex flex-col lg:flex-row gap-3">
                 <form.Field
-                  name="user_id"
+                  name="seller_id"
                   children={(field) => {
                     return (
                       <Field>
@@ -142,7 +145,7 @@ const AddMedicine = () => {
                           type="text"
                           id={field.name}
                           name={field.name}
-                          value={userInfo?.user_id ?? ""}
+                          value={userInfo?.seller_id ?? ""}
                           className="border-2 border-slate-300 font-semibold"
                           disabled
                         />

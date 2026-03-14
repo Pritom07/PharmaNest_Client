@@ -38,6 +38,8 @@ const formSchema = z.object({
 });
 
 const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
+  const [open, setOpen] = useState(false);
+
   const [medicine, setMedicine] = useState<{
     success: boolean;
     message: string;
@@ -47,6 +49,7 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
   const editMedicine = async () => {
     const { data } = await getmedicineById(medicine_id);
     setMedicine(data);
+    setOpen(true);
   };
 
   const medicinedata = medicine?.data;
@@ -71,7 +74,8 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
       );
 
       if (data.success === true) {
-        return toast.success("Medicine Data is updated !");
+        toast.success("Medicine Data is updated !");
+        return setOpen(false);
       }
     },
   });
@@ -91,23 +95,23 @@ const EditDialog = ({ medicine_id }: { medicine_id: string }) => {
   }, [medicinedata]);
 
   const frameworks: T_framework[] = [
-    { label: "Tablet", value: 1 },
-    { label: "Capsule", value: 2 },
+    { label: "General Medicine", value: 1 },
+    { label: "Antibiotics", value: 2 },
     { label: "Syrup", value: 3 },
-    { label: "Injection", value: 4 },
-    { label: "Antibiotic", value: 5 },
+    { label: "Insulin", value: 4 },
+    { label: "Infection Treatment", value: 5 },
     { label: "Pain Relief", value: 6 },
-    { label: "Antiseptic", value: 7 },
-    { label: "Vitamin & Supplement", value: 8 },
-    { label: "Diabetes Care", value: 9 },
-    { label: "Cardiac Care", value: 10 },
-    { label: "Skin Care", value: 11 },
-    { label: "Eye & Ear Drops", value: 12 },
+    { label: "Antiseptic & Disinfectant", value: 7 },
+    { label: "Vitamin & Supplements", value: 8 },
+    { label: "Diabetes Medicine", value: 9 },
+    { label: "Blood Pressure Medicine", value: 10 },
+    { label: "Skin Care Medicine", value: 11 },
+    { label: "Veterinary Medicine", value: 12 },
   ];
 
   return (
     <div>
-      <DialogComponent>
+      <DialogComponent open={open} onOpenChange={setOpen}>
         <form
           id="editMedicine"
           onSubmit={(e) => {

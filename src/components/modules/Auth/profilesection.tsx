@@ -6,10 +6,32 @@ import Image from "next/image";
 import { FaCircleUser } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import EditProfileSection from "./EditProfileSection";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCurrentUserById } from "@/actions/user.action";
+import { authClient } from "@/lib/auth-client";
 
-const Profilesection = ({ currentUser }: { currentUser: T_user }) => {
-  const [user, setUser] = useState(currentUser);
+const Profilesection = () => {
+  const { data: userdata } = authClient.useSession();
+  const [user, setUser] = useState<T_user | null>(null);
+
+  useEffect(() => {
+    const sessionManage = async () => {
+      const currentUserId = userdata?.user.id;
+      if (!currentUserId) return; //new line
+      const { data } = await getCurrentUserById(currentUserId as string);
+      const User = data?.data;
+      if (User) {
+        setUser(User as T_user);
+      }
+    };
+    sessionManage();
+
+    window.addEventListener("userUpdated", sessionManage);
+
+    return () => {
+      window.removeEventListener("userUpdated", sessionManage);
+    };
+  }, [userdata]);
 
   return (
     <div>
@@ -18,7 +40,7 @@ const Profilesection = ({ currentUser }: { currentUser: T_user }) => {
           User Information
         </h1>
 
-        <EditProfileSection currentUser={user} setUser={setUser} />
+        <EditProfileSection currentUser={user as T_user} />
       </div>
 
       <div className="mt-6">
@@ -44,7 +66,7 @@ const Profilesection = ({ currentUser }: { currentUser: T_user }) => {
               <h1 className="font-semibold text-slate-700">{user?.email}</h1>
               <Button className="mt-4 text-[#008080] hover:text-[#008080] bg-blue-200 hover:bg-blue-200">
                 <GoDotFill />
-                <span className="font-bold">{currentUser?.role}</span>
+                <span className="font-bold">{user?.role}</span>
               </Button>
             </div>
           </div>
