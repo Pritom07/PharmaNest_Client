@@ -25,4 +25,43 @@ export const orderServices = {
       return { data: null, error: { message: err.message } };
     }
   },
+
+  getAllOrders: async function () {
+    try {
+      const cookieStore = await cookies();
+      const url = `${BACKEND_URL}/api/customer/orders`;
+      const config: RequestInit = {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+      };
+      config.next = { tags: ["orderListUpdated"] };
+
+      const res = await fetch(url.toString(), config);
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  deleteOrder: async function (id: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/customer/${id}`, {
+        method: "DELETE",
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+      });
+      const data = await res.json();
+      return { data: data, error: { message: null } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
 };

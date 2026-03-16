@@ -164,11 +164,9 @@ const CartItemDisplay = () => {
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 border-t-2 border-slate-300 mt-6 pt-4 px-1">
-                  <h1 className="font-semibold text-base sm:text-[18px]">
-                    Total
-                  </h1>
+                  <h1 className="font-bold text-base sm:text-[18px]">Total</h1>
                   <span></span>
-                  <h1 className="font-semibold text-base sm:text-[18px] text-right">
+                  <h1 className="font-bold text-base sm:text-[18px] text-right">
                     {medicinePrices
                       .map(
                         (medicinePriceObj: T_medicineLocalStorage) =>
