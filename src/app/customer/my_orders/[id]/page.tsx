@@ -1,3 +1,4 @@
+import OrderDetailsDisplay from "@/components/modules/Customer/OrderDetailsDisplay";
 import { orderItemServices } from "@/services/orderItem.services";
 
 const OrderDetailPage = async ({
@@ -7,10 +8,19 @@ const OrderDetailPage = async ({
 }) => {
   const { id } = await params;
   const { data } = await orderItemServices.getAllOrderItems(id);
-  const orderItems = data?.data;
+  const paidOrders = data?.paidOrders;
+  const deliveredOrders = data?.deliveredOrders;
+  const cancelledOrders = data?.cancelledOrders;
+  const generalOrders = data?.generalOrders;
   return (
-    <div className="max-w-7xl mx-auto px-3.5 pt-5">
-      <h1>order detail page :{id}</h1>
+    <div className="max-w-7xl mx-auto px-3.5 pt-7 pb-8">
+      <OrderDetailsDisplay
+        id={id}
+        paidOrders={paidOrders}
+        deliveredOrders={deliveredOrders}
+        cancelledOrders={cancelledOrders}
+        generalOrders={generalOrders}
+      />
     </div>
   );
 };

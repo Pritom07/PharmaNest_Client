@@ -15,3 +15,7 @@ export const deleteOrder = async (id: string) => {
   revalidateTag("orderListUpdated", "max");
   return res;
 };
+
+export const getAmountData = async (id: string) => {
+  return await orderServices.getAmountData(id);
+};
