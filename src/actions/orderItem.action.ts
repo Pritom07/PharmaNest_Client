@@ -12,3 +12,7 @@ export const cancelOrderItem = async (
   revalidateTag("orderItemUpdated", "max");
   return res;
 };
+
+export const deliveredStatusChecking = async (id: string) => {
+  return await orderItemServices.deliveredStatusChecking(id);
+};

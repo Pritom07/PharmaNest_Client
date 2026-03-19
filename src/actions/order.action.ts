@@ -2,6 +2,7 @@
 
 import { orderServices } from "@/services/order.service";
 import { T_orderMedicine } from "@/types/orderMedicineType";
+import { T_payDeliveryCharge } from "@/types/payDeliveryChargeType";
 import { revalidateTag } from "next/cache";
 
 export const createOrder = async (payLoad: T_orderMedicine) => {
@@ -18,4 +19,11 @@ export const deleteOrder = async (id: string) => {
 
 export const getAmountData = async (id: string) => {
   return await orderServices.getAmountData(id);
+};
+
+export const payDeliveryCharge = async (
+  id: string,
+  payLoad: T_payDeliveryCharge,
+) => {
+  return await orderServices.payDeliveryCharge(id, payLoad);
 };

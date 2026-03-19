@@ -46,4 +46,22 @@ export const orderItemServices = {
       return { data: null, error: { message: err.message } };
     }
   },
+
+  deliveredStatusChecking: async function (id: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${BACKEND_URL}/api/orderItem/deliveredChecking/${id}`,
+        {
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
+        },
+      );
+      const data = await res.json();
+      return data;
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
 };

@@ -9,6 +9,7 @@ import { T_cancelOrderItem } from "@/types/cancelOrderItemType";
 import { orderItemStatus, T_orderItem } from "@/types/orderItemType";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import PayDeliveryCharge from "./PayDeliveryCharge";
 
 const OrderDetailsDisplay = ({
   id,
@@ -56,7 +57,7 @@ const OrderDetailsDisplay = ({
       return window.dispatchEvent(new Event("amountUpdated"));
     }
 
-    toast.error(`${name} isn't Cancelled`);
+    toast.error(`Failed to cancel ${name}`);
   };
   return (
     <div>
@@ -145,13 +146,11 @@ const OrderDetailsDisplay = ({
               </Table>
               <div className="mt-3">
                 {amountData?.delivery_charge_status === true ? (
-                  <Button className="w-full bg-[#008080] hover:bg-[#008080] text-[15px] font-semibold">
-                    Delivery Charge Paid
+                  <Button className="w-full bg-orange-500 hover:bg-orange-500 text-[15px] font-semibold">
+                    DELIVERY CHARGE PAID
                   </Button>
                 ) : (
-                  <Button className="w-full bg-[#008080] hover:bg-[#008080] text-[15px] font-semibold cursor-pointer">
-                    Pay Delivery Charge
-                  </Button>
+                  <PayDeliveryCharge id={id} />
                 )}
               </div>
             </div>
@@ -162,7 +161,7 @@ const OrderDetailsDisplay = ({
       <div className="bg-white w-full rounded-xl mt-5 p-8">
         <h1 className="text-center text-4xl font-bold">Order Summery</h1>
         <section className="flex flex-col lg:flex-row justify-center items-start gap-5 mt-6">
-          <div>
+          <div className="w-[50%]">
             <div className="border-2  border-slate-400 rounded-xl p-5">
               <h1 className="text-2xl font-bold">Delivered Orders :</h1>
               <div>
@@ -226,7 +225,7 @@ const OrderDetailsDisplay = ({
             </div>
           </div>
 
-          <div>
+          <div className="w-[50%]">
             <div className="border-2  border-slate-400 rounded-xl p-5">
               <h1 className="text-2xl font-bold">All Orders :</h1>
               <div>

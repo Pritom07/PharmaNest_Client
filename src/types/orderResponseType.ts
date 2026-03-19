@@ -8,6 +8,8 @@ export type T_orderResponse = {
   delivery_charge_status: boolean;
   phoneNumber: string;
   address: string;
+  trnxID: String;
+  delivery_charge_taker_seller_id?: string;
   createdAt: string;
   updatedAt: string;
 };
