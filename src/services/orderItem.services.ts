@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { env } from "../../env";
 import { T_cancelOrderItem } from "@/types/cancelOrderItemType";
+import { T_payOrderItem } from "@/types/payOrderItemType";
 
 const BACKEND_URL = env.BACKEND_URL;
 export const orderItemServices = {
@@ -56,6 +57,27 @@ export const orderItemServices = {
           headers: {
             Cookie: cookieStore.toString(),
           },
+        },
+      );
+      const data = await res.json();
+      return data;
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  payOrderItem: async function (id: string, payLoad: T_payOrderItem) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${BACKEND_URL}/api/orderItem/customer/payOrderItem/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+          body: JSON.stringify(payLoad),
         },
       );
       const data = await res.json();

@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { T_payDeliveryCharge } from "@/types/payDeliveryChargeType";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import * as z from "zod";
 
@@ -97,6 +98,7 @@ const PayDeliveryCharge = ({ id }: { id: string }) => {
             onClick={() => setOpen(true)}
             className="w-full bg-[#008080] hover:bg-[#008080] border-[#008080] text-[15px] text-white hover:text-white font-semibold cursor-pointer"
           >
+            <FaBangladeshiTakaSign />
             PAY DELIVERY CHARGE
           </Button>
         </DialogTrigger>
