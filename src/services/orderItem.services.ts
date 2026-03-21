@@ -19,11 +19,7 @@ export const orderItemServices = {
       const res = await fetch(url.toString(), config);
       const data = await res.json();
 
-      if (data.success === true) {
-        return { data: data, error: { message: null } };
-      }
-
-      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+      return data;
     } catch (err: any) {
       return { data: null, error: { message: err.message } };
     }
@@ -82,6 +78,29 @@ export const orderItemServices = {
       );
       const data = await res.json();
       return data;
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  getActiveRevenue: async function () {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${BACKEND_URL}/api/orderItem/seller/getCountData`,
+        {
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
+        },
+      );
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
     } catch (err: any) {
       return { data: null, error: { message: err.message } };
     }

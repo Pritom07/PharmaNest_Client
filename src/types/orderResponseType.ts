@@ -10,6 +10,9 @@ export type T_orderResponse = {
   address: string;
   trnxID: String;
   delivery_charge_taker_seller_id?: string;
+  customer?: {
+    name: string;
+  };
   createdAt: string;
   updatedAt: string;
 };

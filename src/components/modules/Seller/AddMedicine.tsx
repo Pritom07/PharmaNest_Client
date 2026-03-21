@@ -27,12 +27,17 @@ import { useForm } from "@tanstack/react-form";
 import * as z from "zod";
 import { T_framework } from "@/types/FrameworkType";
 import { useEffect, useState } from "react";
-import { getCurrentUserById, getSession } from "@/actions/user.action";
+import {
+  getCurrentUserById,
+  getSession,
+  getUserStatus,
+} from "@/actions/user.action";
 import { toast } from "react-toastify";
 import { T_medicineData } from "@/types/medicineDataTypes";
 import { addMedicine } from "@/actions/medicine.action";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import Swal from "sweetalert2";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -72,6 +77,19 @@ const AddMedicine = () => {
           seller_id: userInfo?.seller_id,
           img_url: value.img_url,
         };
+
+        const { data: userStatus } = await getUserStatus();
+
+        if (userStatus.data.status !== "ACTIVE") {
+          form.reset();
+          return Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Currently You Are Not Allowed For This Action !",
+            confirmButtonColor: "#008080",
+          });
+        }
+
         const { data } = await addMedicine(medicineData);
 
         if (data.data && data.success === true) {

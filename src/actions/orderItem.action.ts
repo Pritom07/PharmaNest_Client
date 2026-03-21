@@ -23,3 +23,9 @@ export const payOrderItem = async (id: string, payLoad: T_payOrderItem) => {
   revalidateTag("orderItemUpdated", "max");
   return res;
 };
+
+export const getActiveRevenue = async () => {
+  const res = await orderItemServices.getActiveRevenue();
+  revalidateTag("orderItemUpdated", "max");
+  return res;
+};

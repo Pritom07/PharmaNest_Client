@@ -7,7 +7,7 @@ const OrderDetailPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  const { data } = await orderItemServices.getAllOrderItems(id);
+  const data = await orderItemServices.getAllOrderItems(id);
   const paidOrders = data?.paidOrders;
   const deliveredOrders = data?.deliveredOrders;
   const cancelledOrders = data?.cancelledOrders;
@@ -20,6 +20,7 @@ const OrderDetailPage = async ({
         deliveredOrders={deliveredOrders}
         cancelledOrders={cancelledOrders}
         generalOrders={generalOrders}
+        data={data}
       />
     </div>
   );

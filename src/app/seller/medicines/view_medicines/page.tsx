@@ -13,12 +13,13 @@ const All_Medicines = async ({
     { cache: "no-store" },
   );
   const medicines = data?.data;
+  const medicinesArrayLength = medicines?.length;
   const metaData = data?.metadata;
 
   return (
     <div>
       <ViewMedicine medicines={medicines} />
-      <PaginationControll metaData={metaData} />
+      <PaginationControll length={medicinesArrayLength} metaData={metaData} />
     </div>
   );
 };

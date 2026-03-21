@@ -1,6 +1,6 @@
 "use client";
 
-import { getCurrentUserById } from "@/actions/user.action";
+import { getCurrentUserById, getUserStatus } from "@/actions/user.action";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Field,
@@ -18,7 +18,7 @@ import { T_medicineData } from "@/types/medicineDataTypes";
 import { T_user } from "@/types/userType";
 import { useForm } from "@tanstack/react-form";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as z from "zod";
 import { FaCircleDot } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
@@ -36,12 +36,31 @@ const formSchema = z.object({
 const CustomerCheckOut = () => {
   const router = useRouter();
   const { data: currentUserData } = authClient.useSession();
+  const [status, setStatus] = useState();
+  const hasShownAlert = useRef(false);
   const [user, setUser] = useState<T_user | null>(null);
   const [medicines, setMedicines] = useState<T_medicineData[] | []>([]);
   const [deliveryCharge, setDeliveryCharge] = useState(100);
   const [isFormInitialized, setIsFormInitialized] = useState(false);
 
   useEffect(() => {
+    (async () => {
+      const { data } = await getUserStatus();
+      const userStatus = data?.data?.status;
+      setStatus(userStatus);
+
+      if (userStatus !== "ACTIVE" && !hasShownAlert.current) {
+        hasShownAlert.current = true;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Currently You Are Not Allowed For This Action !",
+          confirmButtonColor: "#008080",
+        });
+        router.push("/customer/cart");
+      }
+    })();
+
     (async () => {
       const customer_id = currentUserData?.user.id;
       const { data } = await getCurrentUserById(customer_id as string);
@@ -74,6 +93,19 @@ const CustomerCheckOut = () => {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
+      const { data: userStatus } = await getUserStatus();
+      const status = userStatus?.data?.status;
+
+      if (status !== "ACTIVE") {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Currently You Are Not Allowed For This Action !",
+          confirmButtonColor: "#008080",
+        });
+        return router.push("/customer/cart");
+      }
+
       const orderData = {
         customer_id: value.customer_id,
         subtotal_amount: subTotal,
@@ -110,6 +142,10 @@ const CustomerCheckOut = () => {
       setIsFormInitialized(true);
     }
   }, [user, isFormInitialized, form]);
+
+  if (status !== "ACTIVE") {
+    return null;
+  }
 
   return (
     <div className="container max-w-6xl mx-auto">

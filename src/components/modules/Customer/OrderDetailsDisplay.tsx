@@ -12,6 +12,9 @@ import { toast } from "react-toastify";
 import PayDeliveryCharge from "./PayDeliveryCharge";
 import { FaThumbsUp } from "react-icons/fa";
 import { T_payOrderItem } from "@/types/payOrderItemType";
+import { getUserStatus } from "@/actions/user.action";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const OrderDetailsDisplay = ({
   id,
@@ -19,16 +22,55 @@ const OrderDetailsDisplay = ({
   deliveredOrders,
   cancelledOrders,
   generalOrders,
+  data,
 }: {
   id: string;
   paidOrders: T_orderItem[];
   deliveredOrders: T_orderItem[];
   cancelledOrders: T_orderItem[];
   generalOrders: T_orderItem[];
+  data: {
+    success: boolean;
+    message: string;
+    paidOrders?: T_orderItem[];
+    deliveredOrders?: T_orderItem[];
+    cancelledOrders?: T_orderItem[];
+    generalOrders?: T_orderItem[];
+  };
 }) => {
+  const [status, setStatus] = useState();
+  const router = useRouter();
   const [amountData, setAmountData] = useState<T_amountData | null>(null);
 
   useEffect(() => {
+    (async () => {
+      const { data } = await getUserStatus();
+      const userStatus = data?.data?.status;
+      setStatus(userStatus);
+
+      if (userStatus !== "ACTIVE") {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Currently You Are Not Allowed For This Action !",
+          confirmButtonColor: "#008080",
+        });
+
+        return router.push("/");
+      }
+    })();
+
+    if (data?.success === false) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Your Ordered Item Currently Not Available. A Seller May Remove This medicine. So this Order has No Existance !",
+        confirmButtonColor: "#008080",
+      });
+
+      return router.push("/customer/my_orders");
+    }
+
     const trackingAmount = async () => {
       const { data } = await getAmountData(id);
       setAmountData(data?.data);
@@ -92,6 +134,14 @@ const OrderDetailsDisplay = ({
 
     return toast.error(data.message);
   };
+
+  if (status !== "ACTIVE") {
+    return null;
+  }
+
+  if (data?.success === false) {
+    return null;
+  }
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -234,12 +284,12 @@ const OrderDetailsDisplay = ({
                 Delivered Orders :
               </h1>
 
-              {deliveredOrders.length === 0 ? (
+              {deliveredOrders?.length === 0 ? (
                 <h1 className="mt-3 text-slate-500 font-semibold">
                   No Medicine Delivered Yet !
                 </h1>
               ) : (
-                deliveredOrders.map((orderItem) => (
+                deliveredOrders?.map((orderItem) => (
                   <div
                     key={orderItem.id}
                     className="bg-[#A2D2E2] rounded-xl p-3 mt-3 text-black font-semibold"
@@ -274,12 +324,12 @@ const OrderDetailsDisplay = ({
 
             <div className="border-2 border-slate-400 rounded-xl mt-5 p-4 md:p-5">
               <h1 className="text-xl md:text-2xl font-bold">Paid Orders :</h1>
-              {paidOrders.length === 0 ? (
+              {paidOrders?.length === 0 ? (
                 <h1 className="mt-3 text-slate-500 font-semibold">
                   No Paid Medicines Found !
                 </h1>
               ) : (
-                paidOrders.map((orderItem) => (
+                paidOrders?.map((orderItem) => (
                   <div
                     key={orderItem.id}
                     className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 bg-[#A2D2E2] rounded-xl p-3 mt-3 text-black font-semibold text-sm md:text-base"
@@ -304,13 +354,13 @@ const OrderDetailsDisplay = ({
           <div className="w-full lg:w-1/2">
             <div className="border-2 border-slate-400 rounded-xl p-4 md:p-5">
               <h1 className="text-xl md:text-2xl font-bold">All Orders :</h1>
-              {generalOrders.length === 0 ? (
+              {generalOrders?.length === 0 ? (
                 <h1 className="mt-3 text-slate-500 font-semibold">
                   No Active Orders Available. All Items Have Either Been
                   Delivered Or Cancelled !
                 </h1>
               ) : (
-                generalOrders.map((orderItem: T_orderItem) => (
+                generalOrders?.map((orderItem: T_orderItem) => (
                   <div
                     key={orderItem.id}
                     className="bg-[#A2D2E2] rounded-xl py-3 px-2.5 mt-3 text-black font-semibold"
@@ -353,12 +403,12 @@ const OrderDetailsDisplay = ({
                 Cancelled Orders :
               </h1>
 
-              {cancelledOrders.length === 0 ? (
+              {cancelledOrders?.length === 0 ? (
                 <h1 className="mt-3 text-slate-500 font-semibold">
                   No Medicines Have Been Cancelled.
                 </h1>
               ) : (
-                cancelledOrders.map((orderItem) => (
+                cancelledOrders?.map((orderItem) => (
                   <div
                     key={orderItem.id}
                     className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 bg-[#A2D2E2] rounded-xl p-3 mt-3 text-black font-semibold text-sm md:text-base"

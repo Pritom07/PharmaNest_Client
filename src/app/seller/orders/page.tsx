@@ -1,9 +1,9 @@
-import React from "react";
+import AllCustomersOrders from "@/components/modules/Seller/AllCustomersOrders";
 
 const OrdersPage = () => {
   return (
-    <div>
-      <h1>seller orders page</h1>
+    <div className="max-w-7xl mx-auto px-3.5 pt-5">
+      <AllCustomersOrders />
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { env } from "../../env";
 import { cookies } from "next/headers";
 
 const BACKEND_URL = env.BACKEND_URL;
-
 export const medicineServices = {
   addMedicine: async function (medicineData: T_medicineData) {
     try {
@@ -128,6 +127,29 @@ export const medicineServices = {
       if (data.success === true) {
         return { data: data, error: { message: null } };
       }
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  getMedicineCountData: async function () {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${BACKEND_URL}/api/seller/medicines/getCountData`,
+        {
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
+        },
+      );
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
       return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
     } catch (err: any) {
       return { data: null, error: { message: err.message } };

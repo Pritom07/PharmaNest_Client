@@ -18,12 +18,16 @@ const ShopPage = async ({
     { cache: "no-store" },
   );
   const medicineData = data?.data;
+  const medicineDataArrayLength = medicineData.length;
   const metadata = data?.metadata;
 
   return (
     <div className="max-w-7xl mx-auto pt-5 px-3.5">
       <PublicPage medicineData={medicineData} />
-      <PaginationControll metaData={metadata} />
+      <PaginationControll
+        length={medicineDataArrayLength}
+        metaData={metadata}
+      />
     </div>
   );
 };

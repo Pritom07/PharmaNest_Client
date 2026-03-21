@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteMedicine } from "@/actions/medicine.action";
+import { getUserStatus } from "@/actions/user.action";
 import EditDialog from "@/components/layout/Dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +13,37 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { T_medicineData } from "@/types/medicineDataTypes";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
+  const [status, setStatus] = useState();
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await getUserStatus();
+      const userStatus = data.data.status;
+      setStatus(userStatus);
+
+      if (userStatus !== "ACTIVE") {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Currently You Are Not Allowed For This Action !",
+          confirmButtonColor: "#008080",
+        });
+        router.push("/seller/medicines");
+      }
+    })();
+  }, []);
+
+  if (status !== "ACTIVE") {
+    return null;
+  }
+
   const handleDeletemedicine = (name: string, id: string) => {
     Swal.fire({
       title: "Are you sure?",

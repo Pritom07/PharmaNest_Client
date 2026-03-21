@@ -16,8 +16,33 @@ import Link from "next/link";
 import { AiFillDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import { deleteOrder } from "@/actions/order.action";
+import { useEffect, useRef, useState } from "react";
+import { getUserStatus } from "@/actions/user.action";
+import { useRouter } from "next/navigation";
 
 const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
+  const [status, setStatus] = useState();
+  const router = useRouter();
+  const hasShowed = useRef(false);
+  useEffect(() => {
+    (async () => {
+      const { data } = await getUserStatus();
+      const userStatus = data?.data?.status;
+      setStatus(userStatus);
+
+      if (userStatus !== "ACTIVE" && !hasShowed.current) {
+        hasShowed.current = true;
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Currently You Are Not Allowed For This Action !",
+          confirmButtonColor: "#008080",
+        });
+        return router.push("/");
+      }
+    })();
+  }, []);
+
   const handleOrderDelete = (id: string) => {
     Swal.fire({
       title: "Are you sure to delete this order?",
@@ -48,6 +73,10 @@ const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
       }
     });
   };
+
+  if (status !== "ACTIVE") {
+    return null;
+  }
   return (
     <div>
       {customerOrders?.length === 0 ? (

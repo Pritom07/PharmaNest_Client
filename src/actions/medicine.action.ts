@@ -25,3 +25,9 @@ export const updateMedicine = async (id: string, payLoad: T_medicineData) => {
   revalidateTag("Medicines", "max");
   return res;
 };
+
+export const getMedicineCountData = async () => {
+  const res = await medicineServices.getMedicineCountData();
+  revalidateTag("Medicines", "max");
+  return res;
+};

@@ -14,3 +14,7 @@ export const getCurrentUserById = async (id: string) => {
 export const updateUserProfileInfo = async (payLoad: T_updateUser) => {
   return await userServices.updateProfileInfo(payLoad);
 };
+
+export const getUserStatus = async () => {
+  return await userServices.getUserStatus();
+};
