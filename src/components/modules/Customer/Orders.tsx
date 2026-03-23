@@ -120,7 +120,7 @@ const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {customerOrders.map((order: T_orderResponse) => (
+              {customerOrders?.map((order: T_orderResponse) => (
                 <TableRow key={order.id}>
                   <TableCell className="font-medium">{order.id}</TableCell>
                   <TableCell className="font-medium">
@@ -142,11 +142,21 @@ const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
                         View Details
                       </Button>
                     </Link>
+
                     <Button
                       onClick={() => handleOrderDelete(order.id)}
                       className="ml-3 cursor-pointer bg-red-600 hover:bg-red-600"
                     >
                       <AiFillDelete className="text-white" /> Delete
+                    </Button>
+
+                    <Button
+                      className="ml-3 cursor-pointer font-semibold bg-amber-600 hover:bg-amber-600"
+                      disabled={
+                        order.is_All_OrderItem_Delivered_and_Paid === false
+                      }
+                    >
+                      Review
                     </Button>
                   </TableCell>
                 </TableRow>

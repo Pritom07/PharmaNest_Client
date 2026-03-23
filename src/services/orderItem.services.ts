@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { env } from "../../env";
 import { T_cancelOrderItem } from "@/types/cancelOrderItemType";
 import { T_payOrderItem } from "@/types/payOrderItemType";
+import { orderItemStatus } from "@/types/orderItemType";
 
 const BACKEND_URL = env.BACKEND_URL;
 export const orderItemServices = {
@@ -20,6 +21,26 @@ export const orderItemServices = {
       const data = await res.json();
 
       return data;
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  getAllOrderItemForSeller: async function (id: string) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/orderItem/seller/${id}`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+      });
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
     } catch (err: any) {
       return { data: null, error: { message: err.message } };
     }
@@ -92,6 +113,35 @@ export const orderItemServices = {
           headers: {
             Cookie: cookieStore.toString(),
           },
+        },
+      );
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  updateOrderItemStatus: async function (
+    id: string,
+    payLoad: { status: orderItemStatus },
+  ) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(
+        `${BACKEND_URL}/api/orderItem/updateStatus/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+          body: JSON.stringify(payLoad),
         },
       );
       const data = await res.json();

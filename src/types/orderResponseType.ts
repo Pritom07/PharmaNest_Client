@@ -13,6 +13,8 @@ export type T_orderResponse = {
   customer?: {
     name: string;
   };
-  createdAt: string;
-  updatedAt: string;
+  seller_id?: string;
+  is_All_OrderItem_Delivered_and_Paid?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 };

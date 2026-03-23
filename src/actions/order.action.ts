@@ -31,3 +31,7 @@ export const payDeliveryCharge = async (
 export const getSellerEndOrders = async () => {
   return await orderServices.getSellerEndOrders();
 };
+
+export const getOrderById = async (id: string) => {
+  return await orderServices.getOrderById(id);
+};

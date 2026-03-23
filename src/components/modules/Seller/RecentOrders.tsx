@@ -12,7 +12,7 @@ import { TbCoinTaka } from "react-icons/tb";
 
 const RecentOrders = async () => {
   const { data } = await orderServices.getRecentOrders();
-  const recentOrders = data.data;
+  const recentOrders = data?.data;
   return (
     <div className="mt-14 pb-5">
       <h1 className="text-2xl font-bold">Recent orders</h1>

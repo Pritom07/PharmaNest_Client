@@ -15,6 +15,13 @@ export type T_orderItem = {
   status: orderItemStatus;
   medicine?: {
     name: string;
+    img_url: string;
+  };
+  seller?: {
+    name: string;
+  };
+  order?: {
+    createdAt: string;
   };
   createdAt: string;
   updatedAt: string;
