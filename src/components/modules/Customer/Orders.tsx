@@ -19,6 +19,7 @@ import { deleteOrder } from "@/actions/order.action";
 import { useEffect, useRef, useState } from "react";
 import { getUserStatus } from "@/actions/user.action";
 import { useRouter } from "next/navigation";
+import OrderReview from "./OrderReview";
 
 const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
   const [status, setStatus] = useState();
@@ -136,7 +137,7 @@ const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
                   <TableCell className="font-medium">
                     {order.total_amount}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="flex justify-end items-center gap-3">
                     <Link href={`/customer/my_orders/${order.id}`}>
                       <Button className="bg-[#008080] hover:bg-[#008080] font-semibold cursor-pointer">
                         View Details
@@ -145,19 +146,12 @@ const Orders = ({ customerOrders }: { customerOrders: T_orderResponse[] }) => {
 
                     <Button
                       onClick={() => handleOrderDelete(order.id)}
-                      className="ml-3 cursor-pointer bg-red-600 hover:bg-red-600"
+                      className="cursor-pointer bg-red-600 hover:bg-red-600"
                     >
                       <AiFillDelete className="text-white" /> Delete
                     </Button>
 
-                    <Button
-                      className="ml-3 cursor-pointer font-semibold bg-amber-600 hover:bg-amber-600"
-                      disabled={
-                        order.is_All_OrderItem_Delivered_and_Paid === false
-                      }
-                    >
-                      Review
-                    </Button>
+                    <OrderReview order={order} />
                   </TableCell>
                 </TableRow>
               ))}
