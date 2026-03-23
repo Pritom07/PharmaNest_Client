@@ -4,6 +4,25 @@ import { T_review } from "@/types/reviewType";
 
 const BACKEND_URL = env.BACKEND_URL;
 export const reviewServices = {
+  gettingAllReviews: async function () {
+    try {
+      const url = `${BACKEND_URL}/api/customer/review`;
+      const config: RequestInit = {
+        next: { tags: ["reviewsUpdated"] },
+      };
+      const res = await fetch(url.toString(), config);
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
   createOrUpdateReview: async function (payLoad: T_review) {
     try {
       const cookieStore = await cookies();
