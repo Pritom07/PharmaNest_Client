@@ -9,19 +9,28 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { USER_ROLE } from "@/types/userType";
+import { adminRoutes } from "@/sidebarRoutes/adminRoutes";
+import { sellerRoutes } from "@/sidebarRoutes/sellerRoutes";
+import { T_sidebarRoutes } from "@/types/sidebarRoutesType";
 
-const data = [
-  {
-    title: "Add New Medicine",
-    url: "/seller/medicines/add_medicine",
-  },
-  {
-    title: "View Medicines",
-    url: "/seller/medicines/view_medicines",
-  },
-];
+export function AppSidebar({
+  userRole,
+  ...props
+}: { userRole: USER_ROLE } & React.ComponentProps<typeof Sidebar>) {
+  let data: T_sidebarRoutes[] = [];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  switch (userRole) {
+    case USER_ROLE.ADMIN:
+      data = adminRoutes;
+      break;
+    case USER_ROLE.SELLER:
+      data = sellerRoutes;
+      break;
+    default:
+      data = [];
+  }
+
   return (
     <Sidebar {...props} className="absolute mt-16">
       <SidebarContent>

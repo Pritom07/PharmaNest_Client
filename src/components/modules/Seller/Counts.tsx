@@ -35,7 +35,7 @@ const Counts = () => {
       <div className="flex flex-col lg:flex-row justify-between items-center">
         <h1 className="text-3xl font-bold">Seller Dashboard</h1>
         <section className="flex justify-center items-center gap-3 mt-4 lg:mt-0">
-          <Link href="/seller/medicines">
+          <Link href="/seller/add_medicine">
             <Button className="bg-[#008080] hover:bg-[#008080] cursor-pointer">
               Manage Medicines
             </Button>

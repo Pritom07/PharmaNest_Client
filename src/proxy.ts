@@ -20,12 +20,25 @@ export const proxy = async (request: NextRequest) => {
     const data = await res.json();
     const userRole = data?.user.role as string;
 
-    if (userRole === role.CUSTOMER && pathName.startsWith("/seller")) {
+    if (
+      userRole === role.CUSTOMER &&
+      (pathName.startsWith("/seller") || pathName.startsWith("/admin"))
+    ) {
       return NextResponse.redirect(new URL("/customer/my_orders", request.url));
     }
 
-    if (userRole === role.SELLER && pathName.startsWith("/customer")) {
+    if (
+      userRole === role.SELLER &&
+      (pathName.startsWith("/customer") || pathName.startsWith("/admin"))
+    ) {
       return NextResponse.redirect(new URL("/seller/dashboard", request.url));
+    }
+
+    if (
+      userRole === role.ADMIN &&
+      (pathName.startsWith("/seller") || pathName.startsWith("/customer"))
+    ) {
+      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     }
   }
 
@@ -38,5 +51,6 @@ export const config = {
     "/seller/:path*",
     "/profile",
     "/customer/:path*",
+    "/admin/:path*",
   ],
 };

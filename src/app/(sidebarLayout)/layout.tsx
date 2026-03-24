@@ -5,12 +5,23 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { role } from "@/constants/role";
+import { userServices } from "@/services/user.service";
+import { USER_ROLE } from "@/types/userType";
 import React from "react";
 
-const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
+const SidebarLayout = async ({
+  adminSlot,
+  sellerSlot,
+}: {
+  adminSlot: React.ReactNode;
+  sellerSlot: React.ReactNode;
+}) => {
+  const data = await userServices.getSession();
+  const userRole = data?.user.role;
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar userRole={userRole as USER_ROLE} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
@@ -19,10 +30,10 @@ const layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
             className="mr-2 data-[orientation=vertical]:h-4"
           />
         </header>
-        <div>{children}</div>
+        <div>{userRole === role.ADMIN ? adminSlot : sellerSlot}</div>
       </SidebarInset>
     </SidebarProvider>
   );
 };
 
-export default layout;
+export default SidebarLayout;

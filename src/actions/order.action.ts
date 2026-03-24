@@ -35,3 +35,7 @@ export const getSellerEndOrders = async () => {
 export const getOrderById = async (id: string) => {
   return await orderServices.getOrderById(id);
 };
+
+export const get_Last_FiveDays_Orders_For_Admin = async () => {
+  return await orderServices.get_Last_FiveDays_Orders_For_Admin();
+};
