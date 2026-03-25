@@ -20,7 +20,7 @@ const PaginationControll = ({
   metaData: T_paginationMedicineMetaData;
 }) => {
   const [status, setStatus] = useState();
-  const { totalMedicines, currentPage, totalPages, size } = metaData;
+  const { total, currentPage, totalPages, size } = metaData;
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -43,7 +43,7 @@ const PaginationControll = ({
   };
 
   let start = (currentPage - 1) * size + 1;
-  let end = Math.min(currentPage * size, totalMedicines);
+  let end = Math.min(currentPage * size, total);
 
   return (
     <div>
@@ -52,7 +52,7 @@ const PaginationControll = ({
       ) : (
         <div className="max-w-7xl mx-auto mt-8 lg:mt-3 px-3.5 flex flex-col lg:flex-row justify-between items-center gap-2.5 pb-3">
           <div className=" text-gray-600 font-semibold">
-            Result : {start} to {end} of {totalMedicines}
+            Result : {start} to {end} of {total}
           </div>
 
           <div className="flex items-center gap-3">

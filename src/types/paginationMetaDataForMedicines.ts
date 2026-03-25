@@ -1,5 +1,5 @@
 export type T_paginationMedicineMetaData = {
-  totalMedicines: number;
+  total: number;
   currentPage: number;
   totalPages: number;
   size: number;

@@ -17,16 +17,6 @@ import {
 import { useEffect, useState } from "react";
 import { get_Last_FiveDays_Orders_For_Admin } from "@/actions/order.action";
 
-export const description = "A simple area chart";
-
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -87,9 +77,9 @@ const OrderVsDateChart = () => {
             <Area
               dataKey="no_of_orders_per_date"
               type="natural"
-              fill="var(--color-desktop)"
+              fill="#008080"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="#008080"
             />
           </AreaChart>
         </ChartContainer>
