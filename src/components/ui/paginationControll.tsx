@@ -9,8 +9,6 @@ import {
 } from "lucide-react";
 import { Button } from "./button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getUserStatus } from "@/actions/user.action";
 
 const PaginationControll = ({
   length,
@@ -19,22 +17,9 @@ const PaginationControll = ({
   length: number;
   metaData: T_paginationMedicineMetaData;
 }) => {
-  const [status, setStatus] = useState();
   const { total, currentPage, totalPages, size } = metaData;
   const searchParams = useSearchParams();
   const router = useRouter();
-
-  useEffect(() => {
-    (async () => {
-      const { data } = await getUserStatus();
-      const userStatus = data?.data?.status;
-      setStatus(userStatus);
-    })();
-  }, []);
-
-  if (status && status !== "ACTIVE") {
-    return null;
-  }
 
   const navigate = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());

@@ -18,7 +18,7 @@ const ShopPage = async ({
     { cache: "no-store" },
   );
   const medicineData = data?.data;
-  const medicineDataArrayLength = medicineData.length;
+  const medicineDataArrayLength = medicineData?.length;
   const metadata = data?.metadata;
 
   return (

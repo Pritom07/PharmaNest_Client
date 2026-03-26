@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { env } from "../../env";
-import { T_updateUser } from "@/types/userType";
+import { T_updateUser, userStatus } from "@/types/userType";
 
 const BACKEND_URL = env.BACKEND_URL;
 export const userServices = {
@@ -83,6 +83,54 @@ export const userServices = {
       }
 
       return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  getAllUsers: async function () {
+    try {
+      const cookieStore = await cookies();
+      const url = new URL(`${BACKEND_URL}/api/user`);
+      const config: RequestInit = {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
+        next: {
+          tags: ["userUpdated"],
+        },
+      };
+
+      const res = await fetch(url.toString(), config);
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
+      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
+
+  updateUserStatus: async function (
+    id: string,
+    payLoad: { status: userStatus },
+  ) {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${BACKEND_URL}/api/user/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify(payLoad),
+      });
+      const data = await res.json();
+
+      return data;
     } catch (err: any) {
       return { data: null, error: { message: err.message } };
     }

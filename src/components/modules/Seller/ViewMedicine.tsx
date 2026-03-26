@@ -35,7 +35,7 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
           text: "Currently You Are Not Allowed For This Action !",
           confirmButtonColor: "#008080",
         });
-        router.push("/seller/medicines");
+        router.push("/seller/dashboard");
       }
     })();
   }, []);

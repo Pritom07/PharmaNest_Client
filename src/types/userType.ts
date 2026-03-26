@@ -4,7 +4,7 @@ export enum USER_ROLE {
   SELLER = "SELLER",
 }
 
-enum userStatus {
+export enum userStatus {
   ACTIVE = "ACTIVE",
   BANNED = "BANNED",
 }

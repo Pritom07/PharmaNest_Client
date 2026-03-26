@@ -90,7 +90,7 @@ const AddMedicine = () => {
 
         if (data.data && data.success === true) {
           toast.success("Medicine added successfully !");
-          return router.push("/seller/medicines/view_medicines");
+          return router.push("/seller/view_medicines");
         }
 
         return toast.error("SOMETHING_WENT_WRONG");

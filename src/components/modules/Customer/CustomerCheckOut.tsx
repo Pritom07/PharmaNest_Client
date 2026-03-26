@@ -58,6 +58,7 @@ const CustomerCheckOut = () => {
           confirmButtonColor: "#008080",
         });
         router.push("/customer/cart");
+        return null;
       }
     })();
 
