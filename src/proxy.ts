@@ -5,7 +5,10 @@ import { role } from "./constants/role";
 export const proxy = async (request: NextRequest) => {
   const pathName = request.nextUrl.pathname;
   const API_URL = env.API_URL;
-  const sessionToken = request.cookies.get("better-auth.session_token");
+  const sessionToken =
+    request.cookies.get("__Secure-better-auth.session_token") ||
+    request.cookies.get("__Secure-better-auth.session_data") ||
+    request.cookies.get("better-auth.session_token");
 
   if (!sessionToken) {
     return NextResponse.redirect(new URL("/login", request.url));
