@@ -85,4 +85,19 @@ export const publicServices = {
       return { data: null, error: { message: err.message } };
     }
   },
+
+  getCategories: async function () {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/categories`);
+      const data = await res.json();
+
+      if (data.success === true) {
+        return { data: data, error: { message: null } };
+      }
+
+      return { data: null, error: { message: "SOMETHING_WENT_WRONF" } };
+    } catch (err: any) {
+      return { data: null, error: { message: err.message } };
+    }
+  },
 };

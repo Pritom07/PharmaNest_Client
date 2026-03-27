@@ -9,4 +9,8 @@ export const adminRoutes: T_sidebarRoutes[] = [
     title: "User Management",
     url: "/admin/userManagement",
   },
+  {
+    title: "Orders Progress",
+    url: "/admin/ordersManaging",
+  },
 ];

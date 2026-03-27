@@ -34,6 +34,7 @@ import { addMedicine } from "@/actions/medicine.action";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import Swal from "sweetalert2";
+import { getCategoryForSeller } from "@/actions/category.action";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -48,6 +49,8 @@ const formSchema = z.object({
 
 const AddMedicine = () => {
   const router = useRouter();
+  const [categories, setCategories] = useState();
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -100,21 +103,6 @@ const AddMedicine = () => {
     },
   });
 
-  const frameworks: T_framework[] = [
-    { label: "General Medicine", value: 1 },
-    { label: "Antibiotics", value: 2 },
-    { label: "Syrup", value: 3 },
-    { label: "Insulin", value: 4 },
-    { label: "Infection Treatment", value: 5 },
-    { label: "Pain Relief", value: 6 },
-    { label: "Antiseptic & Disinfectant", value: 7 },
-    { label: "Vitamin & Supplements", value: 8 },
-    { label: "Diabetes Medicine", value: 9 },
-    { label: "Blood Pressure Medicine", value: 10 },
-    { label: "Skin Care Medicine", value: 11 },
-    { label: "Veterinary Medicine", value: 12 },
-  ];
-
   const { data: userData } = authClient.useSession();
   const [userInfo, setUserInfo] = useState<{
     user_name?: string;
@@ -128,6 +116,12 @@ const AddMedicine = () => {
       const user_name = data?.data?.name;
       const seller_id = data?.data?.id;
       setUserInfo({ user_name, seller_id });
+    })();
+
+    (async () => {
+      const { data } = await getCategoryForSeller();
+      const categories = data.data;
+      setCategories(categories);
     })();
   }, [userData]);
 
@@ -324,7 +318,7 @@ const AddMedicine = () => {
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>Category</FieldLabel>
                         <Combobox
-                          items={frameworks}
+                          items={categories}
                           onValueChange={(item: T_framework | null) => {
                             if (item) {
                               field.handleChange(item.value);
@@ -338,13 +332,13 @@ const AddMedicine = () => {
                           />
                           <ComboboxContent>
                             <ComboboxList>
-                              {(framework: T_framework) => (
+                              {(category: T_framework) => (
                                 <ComboboxItem
-                                  key={framework.value}
-                                  value={framework}
+                                  key={category.value}
+                                  value={category}
                                   className="font-semibold"
                                 >
-                                  {framework.label}
+                                  {category.label}
                                 </ComboboxItem>
                               )}
                             </ComboboxList>

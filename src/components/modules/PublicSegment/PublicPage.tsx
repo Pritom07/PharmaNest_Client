@@ -15,8 +15,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { T_framework } from "@/types/FrameworkType";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getMedicineByName } from "@/actions/public.action";
-import { useState } from "react";
+import { getCategories, getMedicineByName } from "@/actions/public.action";
+import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
@@ -26,27 +26,13 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
   const DEFAULT_SORT_BY = "createdAt";
   const DEFAULT_SORT_ORDER = "desc";
 
+  const [categories, setCategories] = useState();
   const [medicine, setMedicine] = useState<T_medicineData[] | []>([]);
   const [loading, setLoading] = useState(false);
 
   const priceFilters: T_priceFilter[] = [
     { label: "High to Low", field: "price", value: "desc" },
     { label: "Low to High", field: "price", value: "asc" },
-  ];
-
-  const frameworks: T_framework[] = [
-    { label: "General Medicine", value: 1 },
-    { label: "Antibiotics", value: 2 },
-    { label: "Syrup", value: 3 },
-    { label: "Insulin", value: 4 },
-    { label: "Infection Treatment", value: 5 },
-    { label: "Pain Relief", value: 6 },
-    { label: "Antiseptic & Disinfectant", value: 7 },
-    { label: "Vitamin & Supplements", value: 8 },
-    { label: "Diabetes Medicine", value: 9 },
-    { label: "Blood Pressure Medicine", value: 10 },
-    { label: "Skin Care Medicine", value: 11 },
-    { label: "Veterinary Medicine", value: 12 },
   ];
 
   const handlePriceFilter = (sortingBy: string, sortingOrder: string) => {
@@ -79,6 +65,14 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
     e.target.reset();
   };
 
+  useEffect(() => {
+    (async () => {
+      const { data } = await getCategories();
+      const categories = data.data;
+      setCategories(categories);
+    })();
+  }, []);
+
   return (
     <div className="px-3.5 max-w-7xl mx-auto">
       <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
@@ -102,7 +96,6 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
               className="border border-slate-300"
             />
             <ComboboxContent>
-              <ComboboxEmpty>No items found.</ComboboxEmpty>
               <ComboboxList>
                 {(filterItem) => (
                   <ComboboxItem key={filterItem.value} value={filterItem}>
@@ -114,7 +107,7 @@ const PublicPage = ({ medicineData }: { medicineData: T_medicineData[] }) => {
           </Combobox>
 
           <Combobox
-            items={frameworks}
+            items={categories}
             itemToStringValue={(filterItem: T_framework) => filterItem.label}
             onValueChange={(filterItem: T_framework | null) =>
               handleCategoryFilter((filterItem?.value as number) ?? 0)

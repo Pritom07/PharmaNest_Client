@@ -22,3 +22,7 @@ export const editCategory = async (id: number, payLoad: T_editCategory) => {
   revalidateTag("categoryUpdated", "max");
   return res;
 };
+
+export const getCategoryForSeller = async () => {
+  return await categoryServices.getCategoryForSeller();
+};

@@ -7,3 +7,7 @@ export const getMedicineByName = async (medicineData: {
 }) => {
   return await publicServices.getMedicineByName(medicineData);
 };
+
+export const getCategories = async () => {
+  return await publicServices.getCategories();
+};
