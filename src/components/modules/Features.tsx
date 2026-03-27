@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 const Features = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 mt-10">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="bg-white shadow-md hover:shadow-xl">
           <CardHeader className="flex justify-center">
             <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center shadow">

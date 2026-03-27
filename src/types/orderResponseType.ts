@@ -14,6 +14,7 @@ export type T_orderResponse = {
     name: string;
   };
   seller_id?: string;
+  is_Any_OrderItem_Delivered_and_Paid?: boolean;
   is_All_OrderItem_Delivered_and_Paid?: boolean;
   createdAt: Date;
   updatedAt: Date;

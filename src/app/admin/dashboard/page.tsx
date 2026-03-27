@@ -1,6 +1,7 @@
 import Dashboard from "@/components/modules/Admin/Dashboard";
 import { orderServices } from "@/services/order.service";
 
+export const dynamic = "force-dynamic";
 const AdminDashboardPage = async () => {
   const { data } = await orderServices.getStatsForAdmin();
   const platformRevenue = data?.platformRevenue;

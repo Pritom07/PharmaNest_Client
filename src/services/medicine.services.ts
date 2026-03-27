@@ -80,11 +80,7 @@ export const medicineServices = {
         },
       });
       const data = await res.json();
-
-      if (data.success === true) {
-        return { data: data, error: { message: null } };
-      }
-      return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
+      return data;
     } catch (err: any) {
       return { data: null, error: { message: err.message } };
     }

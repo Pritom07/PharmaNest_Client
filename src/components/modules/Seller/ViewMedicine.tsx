@@ -55,15 +55,22 @@ const ViewMedicine = ({ medicines }: { medicines: T_medicineData[] }) => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const { data } = await deleteMedicine(id);
+        const data = await deleteMedicine(id);
+
         if (data.success === true) {
-          Swal.fire({
+          return Swal.fire({
             title: "Deleted!",
             text: `${name} has been deleted.`,
             icon: "success",
             confirmButtonColor: "#008080",
           });
         }
+
+        return Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Medicine Deletion Failed. It may be PROCESSING, SHIPPED or DELIVERED in any order/orders!",
+        });
       }
     });
   };

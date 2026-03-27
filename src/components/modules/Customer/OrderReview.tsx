@@ -72,7 +72,7 @@ const OrderReview = ({ order }: { order: T_orderResponse }) => {
           <Button
             onClick={() => setOpen(true)}
             className="cursor-pointer font-semibold bg-amber-600 hover:bg-amber-600"
-            disabled={order.is_All_OrderItem_Delivered_and_Paid === false}
+            disabled={order.is_Any_OrderItem_Delivered_and_Paid === false}
           >
             <MdOutlineRateReview /> Review
           </Button>
