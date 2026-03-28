@@ -21,7 +21,7 @@ const TopRatedMedicines = ({
 
       <div className="grid griid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
         {topMedicines?.length > 0 &&
-          topMedicines.map((medicine) => (
+          topMedicines?.map((medicine) => (
             <Card key={medicine.id} className="bg-white flex flex-col">
               <CardHeader>
                 <div className="relative w-full h-28">

@@ -140,7 +140,7 @@ const CreateCategoryDialog = () => {
               form="categoryForm"
               className="bg-[#008080] hover:bg-[#008080] cursor-pointer"
             >
-              Save changes
+              Create
             </Button>
           </DialogFooter>
         </DialogContent>

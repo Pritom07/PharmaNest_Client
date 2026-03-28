@@ -12,7 +12,7 @@ const Reviews = ({ reviews }: { reviews: T_review[] }) => {
       </h1>
 
       <Marquee pauseOnHover speed={50} className="mt-7">
-        {reviews.map((review: T_review) => (
+        {reviews?.map((review: T_review) => (
           <Card
             key={review.id}
             className="w-65 sm:w-75 md:w-85 lg:w-90 mx-3 flex flex-col justify-between min-h-65

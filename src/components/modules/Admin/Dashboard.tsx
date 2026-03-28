@@ -33,10 +33,10 @@ const Dashboard = ({
           <h1 className="text-center text-2xl font-bold">User Growth</h1>
           <div className="mt-1 text-center">
             <h1 className="text-[18px] font-bold text-blue-600">
-              Customers : {userGrowth.customer}
+              Customers : {userGrowth?.customer}
             </h1>
             <h1 className="text-[18px] font-bold text-blue-600">
-              Sellers : {userGrowth.seller}
+              Sellers : {userGrowth?.seller}
             </h1>
           </div>
         </div>

@@ -35,7 +35,7 @@ const RecentOrders = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {recentOrders.map((order: T_orderResponse) => (
+          {recentOrders?.map((order: T_orderResponse) => (
             <TableRow
               key={order.id}
               className="border-b-2 border-slate-300 font-medium"
