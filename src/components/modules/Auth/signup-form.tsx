@@ -203,10 +203,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
         >
           Sign Up
         </Button>
-        <Button className="w-full cursor-pointer bg-red-500 text-white hover:bg-red-500">
-          <FaGoogle />
-          Continue with Google
-        </Button>
         <FieldDescription className="text-center font-semibold">
           Already have an account? <a href="/login">Sign in</a>
         </FieldDescription>

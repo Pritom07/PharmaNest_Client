@@ -143,14 +143,6 @@ export function LoginForm({
           >
             Login
           </Button>
-          <Button
-            variant="outline"
-            type="button"
-            className="bg-red-500 text-white hover:bg-red-500 hover:text-white cursor-pointer w-full"
-          >
-            <FaGoogle />
-            Continue with Google
-          </Button>
           <FieldDescription className="text-center font-semibold">
             Don&apos;t have an account? <a href="/signup">Sign up</a>
           </FieldDescription>

@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { env } from "../../env";
 import { T_orderMedicine } from "@/types/orderMedicineType";
 import { T_payDeliveryCharge } from "@/types/payDeliveryChargeType";
-import { T_searchParams } from "@/types/searchParamsType";
 
 const BACKEND_URL = env.BACKEND_URL;
 export const orderServices = {
@@ -207,38 +206,4 @@ export const orderServices = {
       return { data: null, error: { message: err.message } };
     }
   },
-
-  // getOrderStats: async function (searchparams: T_searchParams) {
-  //   try {
-  //     const cookieStore = await cookies();
-  //     const url = new URL(`${BACKEND_URL}/api/customer/getOrderStats/adminEnd`);
-  //     // const url = new URL(
-  //     //   `https://pharmanest-server.vercel.app/api/customer/getOrderStats/adminEnd`,
-  //     // );
-
-  //     if (searchparams) {
-  //       Object.entries(searchparams).forEach(([key, value]) => {
-  //         if (value !== null && value !== undefined && value !== "") {
-  //           url.searchParams.append(key, value.toString());
-  //         }
-  //       });
-  //     }
-  //     const config: RequestInit = {
-  //       headers: {
-  //         Cookie: cookieStore.toString(),
-  //       },
-  //     };
-
-  //     const res = await fetch(url.toString(), config);
-  //     const data = await res.json();
-
-  //     if (data.success === true) {
-  //       return { data: data, error: { message: null } };
-  //     }
-
-  //     return { data: null, error: { message: "SOMETHING_WENT_WRONG" } };
-  //   } catch (err: any) {
-  //     return { data: null, error: { message: err.message } };
-  //   }
-  // },
 };
